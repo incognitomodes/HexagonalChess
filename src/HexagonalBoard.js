@@ -22,11 +22,9 @@ class HexagonalBoard {
 
             for (let y = yStart; y <= yHexagons + yStart; y++) {
                 this.hexagons[x][y] = new Hexagon(x, y, this.hexagonRadius, maxWidth / 2, maxHeight / 2);
-                // this.hexagons[x][y].show();
+                this.hexagons[x][y].setPiece(new Piece());
             }
         }
-
-        // this.loadTextures();
     }
 
     loadTextures() {
@@ -58,15 +56,21 @@ class HexagonalBoard {
                     if (!this.getHexagon(column, row)) continue;
 
                     let piece = pos[posRow].substring(posCol, posCol + 1);
+                    let tmp;
+
                     if (HexagonalBoard.isNumeric(piece)) {
                         column += Number(piece) - 1;
+
                     } else {
                         // ckeck if white or black piece
+                        console.log(piece);
                         if(piece == piece.toUpperCase()) {
-                            this.hexagons[column][row].setImage(this.textures[piece.toLowerCase() + "w"]);
+                            tmp = new Piece(piece.toLowerCase(), "w", this.textures[piece.toLowerCase() + "w"]);
                         } else {
-                            this.hexagons[column][row].setImage(this.textures[piece + "b"]);
+                            tmp = new Piece(piece.toLowerCase(), "b", this.textures[piece.toLowerCase() + "b"]);
                         }
+
+                        this.hexagons[column][row].setPiece(tmp);
                     }
 
                     posCol++;

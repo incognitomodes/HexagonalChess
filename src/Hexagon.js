@@ -33,6 +33,24 @@ class Hexagon {
         if ((this.posY + 5) % 3 == 0 && Math.abs(this.posX) % 2 == 1) {
             this.color = new Color(232, 171, 111);
         }
+
+        this.piece = null;
+    }
+
+    setPiece(piece) {
+        this.piece = piece;
+    }
+
+    unsetPiece() {
+        this.piece = null;
+    }
+
+    hasPiece() {
+        return this.piece != null;
+    }
+
+    getPiece() {
+        return this.piece;
     }
 
     setImage(image) {
@@ -48,16 +66,17 @@ class Hexagon {
         this.color.setFill();
         Hexagon.drawHexagon(this.canvasX, this.canvasY, this.radius);
 
-        if (this.image) {
-            imageMode(CENTER);
-            image(this.image, this.canvasX, this.canvasY, this.radius * 1.5, this.radius * 1.5)
+        if (this.piece) {
+            this.piece.show(this.canvasX, this.canvasY, this.radius);
         }
 
         fill(255, 0, 0);
+        strokeWeight(1);
         text(this.posX + "," + this.posY, this.canvasX, this.canvasY);
     }
 
     static drawHexagon(centerX, centerY, radius) {
+        strokeWeight(1);
         beginShape()
         for (let a = 0; a < TAU; a += TAU / 6) {
             vertex(centerX + radius * cos(a), centerY + radius * sin(a))
