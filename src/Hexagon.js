@@ -53,14 +53,6 @@ class Hexagon {
         return this.piece;
     }
 
-    setImage(image) {
-        this.image = image;
-    }
-
-    unsetImage() {
-        this.image = null;
-    }
-
     show() {
         this.color.setStroke();
         this.color.setFill();

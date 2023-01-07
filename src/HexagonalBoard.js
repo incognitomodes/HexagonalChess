@@ -46,9 +46,8 @@ class HexagonalBoard {
 
     loadPosition(FENlikePosition) {
         let pos = FENlikePosition.split("/");
-        console.log(pos);
 
-        // try {
+        try {
             let posRow = 0;
             for (let row = -5; row < 6; row++) {
                 let posCol = 0;
@@ -63,8 +62,7 @@ class HexagonalBoard {
 
                     } else {
                         // ckeck if white or black piece
-                        console.log(piece);
-                        if(piece == piece.toUpperCase()) {
+                        if (piece == piece.toUpperCase()) {
                             tmp = new Piece(piece.toLowerCase(), "w", this.textures[piece.toLowerCase() + "w"]);
                         } else {
                             tmp = new Piece(piece.toLowerCase(), "b", this.textures[piece.toLowerCase() + "b"]);
@@ -77,15 +75,18 @@ class HexagonalBoard {
                 }
                 posRow++;
             }
-        // }
-        // catch (e) {
-        //     console.error("Incorrect position string");
-        //     return;
-        // }
+        }
+        catch (e) {
+            console.error("Incorrect position string");
+            return;
+        }
     }
 
     getHexagon(x, y) {
-        return this.hexagons[x][y];
+        if (this.hexagons[x]) {
+            return this.hexagons[x][y] ?? null;
+        }
+        return null;
     }
 
     show() {

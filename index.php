@@ -11,6 +11,7 @@
     <script src="src/HexagonalBoard.js?id=<?php echo rand(1, 10000); ?>"></script>
     <script src="src/Hexagon.js?id=<?php echo rand(1, 10000); ?>"></script>
     <script src="src/Piece.js?id=<?php echo rand(1, 10000); ?>"></script>
+    <script src="src/LegalMoves.js?id=<?php echo rand(1, 10000); ?>"></script>
     <script src="src/Color.js"></script>
 
     <style>
