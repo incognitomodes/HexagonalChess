@@ -1,43 +1,37 @@
-let canvas;
+let board;
 
-function setup() {
-    canvas = createCanvas(window.innerWidth, window.innerHeight - 4);
+function preload() {
 }
 
-function draw() {
+function delay(milliseconds){
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
+}
+
+async function setup() {
+    createCanvas(window.innerWidth, window.innerHeight - 4);
+    
+    board = new HexagonalBoard(width, height);
+    board.loadTextures();
+
+    // wait for textures to load
+    // await delay(500);
+
+    board.loadPosition("qbk/rn1b1nr/1pp2b2pp1/3pp1pp3/5p5/11/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
+}
+
+async function draw() {
     background(55);
 
-    // HexagonalBoard.drawHexagon(canvas, width / 2, height / 2, 10);
-    let t = new HexagonalBoard(width, height);
+    board.show();
 
-    // let tmp = new Hexagon(0, 0, 50, width / 2, height / 2);
-    // tmp.show();
+    // noLoop();
+}
 
-    // tmp = new Hexagon(1, 0, 50, width / 2, height / 2);
-    // tmp.show();
+function mouseClicked() {
+    // console.log(mouseX + "==" + mouseY);
+}
 
-    // tmp = new Hexagon(2, 0, 50, width / 2, height / 2);
-    // tmp.show();
-
-    // tmp = new Hexagon(3, 0, 50, width / 2, height / 2);
-    // tmp.show();
-
-    // tmp = new Hexagon(-1, 0, 50, width / 2, height / 2);
-    // tmp.show();
-
-    // tmp = new Hexagon(0, 1, 50, width / 2, height / 2);
-    // tmp.show();
-
-    // tmp = new Hexagon(0, -1, 50, width / 2, height / 2);
-    // tmp.show();
-    // tmp = new Hexagon(-1, 1, 50, width / 2, height / 2);
-    // tmp.show();
-    image(loadImage("assets/textures/bw480.png"), 100, 100);
-
-    stroke(255,0,0);
-    strokeWeight(10);
-
-    point(width / 2, height / 2);
-
-    noLoop();
+function mouseReleased() {
 }

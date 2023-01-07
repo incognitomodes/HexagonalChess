@@ -35,12 +35,25 @@ class Hexagon {
         }
     }
 
+    setImage(image) {
+        this.image = image;
+    }
+
+    unsetImage() {
+        this.image = null;
+    }
+
     show() {
         this.color.setStroke();
         this.color.setFill();
         Hexagon.drawHexagon(this.canvasX, this.canvasY, this.radius);
 
-        fill(0);
+        if (this.image) {
+            imageMode(CENTER);
+            image(this.image, this.canvasX, this.canvasY, this.radius * 1.5, this.radius * 1.5)
+        }
+
+        fill(255, 0, 0);
         text(this.posX + "," + this.posY, this.canvasX, this.canvasY);
     }
 

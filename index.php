@@ -8,8 +8,8 @@
 
     <script src="p5.js"></script>
     <script src="src/sketch.js?id=<?php echo rand(1, 10000); ?>"></script>
-    <script src="src/HexagonalBoard.js"></script>
-    <script src="src/Hexagon.js"></script>
+    <script src="src/HexagonalBoard.js?id=<?php echo rand(1, 10000); ?>"></script>
+    <script src="src/Hexagon.js?id=<?php echo rand(1, 10000); ?>"></script>
     <script src="src/Color.js"></script>
 
     <style>

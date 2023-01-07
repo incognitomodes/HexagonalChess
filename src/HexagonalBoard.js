@@ -20,16 +20,13 @@ class HexagonalBoard {
             let yHexagons = 10 - Math.abs(x);
             let yStart = -Math.ceil(yHexagons / 2);
 
-            for(let y = yStart; y <= yHexagons + yStart; y++) {
+            for (let y = yStart; y <= yHexagons + yStart; y++) {
                 this.hexagons[x][y] = new Hexagon(x, y, this.hexagonRadius, maxWidth / 2, maxHeight / 2);
-                this.hexagons[x][y].show();
+                // this.hexagons[x][y].show();
             }
         }
 
         // this.loadTextures();
-
-        // let hex = this.getHexagon(0,0);
-        // image(this.textures["bb"], hex.canvasX, hex.canvasY);
     }
 
     loadTextures() {
@@ -49,7 +46,55 @@ class HexagonalBoard {
         this.textures["nw"] = loadImage("assets/textures/nw480.png");
     }
 
+    loadPosition(FENlikePosition) {
+        let pos = FENlikePosition.split("/");
+        console.log(pos);
+
+        // try {
+            let posRow = 0;
+            for (let row = -5; row < 6; row++) {
+                let posCol = 0;
+                for (let column = -5; column < 6; column++) {
+                    if (!this.getHexagon(column, row)) continue;
+
+                    let piece = pos[posRow].substring(posCol, posCol + 1);
+                    if (HexagonalBoard.isNumeric(piece)) {
+                        column += Number(piece) - 1;
+                    } else {
+                        // ckeck if white or black piece
+                        if(piece == piece.toUpperCase()) {
+                            this.hexagons[column][row].setImage(this.textures[piece.toLowerCase() + "w"]);
+                        } else {
+                            this.hexagons[column][row].setImage(this.textures[piece + "b"]);
+                        }
+                    }
+
+                    posCol++;
+                }
+                posRow++;
+            }
+        // }
+        // catch (e) {
+        //     console.error("Incorrect position string");
+        //     return;
+        // }
+    }
+
     getHexagon(x, y) {
         return this.hexagons[x][y];
+    }
+
+    show() {
+        for (let item in this.hexagons) {
+            for (let subitem in this.hexagons[item]) {
+                this.hexagons[item][subitem].show();
+            }
+        }
+    }
+
+    static isNumeric(str) {
+        if (typeof str != "string") return false // we only process strings!  
+        return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+            !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
     }
 }
