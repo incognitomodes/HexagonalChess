@@ -1,5 +1,5 @@
 class Piece {
-    constructor(type, color, image) {
+    constructor(type = null, color = null, image = null) {
         this.type = type;
         this.color = color;
         this.image = image;

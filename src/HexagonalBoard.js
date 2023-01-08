@@ -60,8 +60,7 @@ class HexagonalBoard {
 
                     if (HexagonalBoard.isNumeric(piece)) {
                         column += Number(piece) - 1;
-
-                    } else {
+                    } else if (piece != ""){
                         // ckeck if white or black piece
                         if (piece == piece.toUpperCase()) {
                             tmp = new Piece(piece.toLowerCase(), "w", this.textures[piece.toLowerCase() + "w"]);
