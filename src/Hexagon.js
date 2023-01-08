@@ -44,7 +44,7 @@ class Hexagon {
     }
 
     unsetPiece() {
-        this.piece = null;
+        this.piece = new Piece();
     }
 
     hasPiece() {

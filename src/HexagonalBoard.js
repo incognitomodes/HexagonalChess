@@ -98,6 +98,10 @@ class HexagonalBoard {
         }
 
         this.showLegalMoves();
+
+        if(this.pressedHexgagon) {
+            image(this.pressedHexgagon.getPiece().image, mouseX, mouseY, this.hexagonRadius * 1.5, this.hexagonRadius * 1.5);
+        }
     }
 
     showLegalMoves() {
@@ -139,19 +143,49 @@ class HexagonalBoard {
                 let h = this.hexagons[item][subitem];
                 
                 if(HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
-                    console.log("piece clicked");
+                    if(h.pieceEmpty()) {
+                        return;
+                    }
+
                     this.legalMoves = h.getPiece().getMovesForThisPiece(h.posX, h.posY, this);
 
                     this.pressedHexgagon = h;
                     h.showPiece = false;
+
+                    return;
                 }
             }
         }
     }
 
     mouseReleased(mouseX, mouseY) {
-        this.pressedHexgagon.showPiece = true;
-        this.pressedHexgagon = null;
+        if(this.pressedHexgagon) {
+            for (let item in this.hexagons) {
+                for (let subitem in this.hexagons[item]) {
+                    let h = this.hexagons[item][subitem];
+                    
+                    if(HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
+                        for(let move in this.legalMoves) {
+                            // check if move can be made
+                            if(this.legalMoves[move].x == h.posX && this.legalMoves[move].y == h.posY) {
+                                
+                                h.setPiece(this.pressedHexgagon.getPiece());
+                                this.pressedHexgagon.unsetPiece();
+
+                                console.log("correct");
+                                break;
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            this.legalMoves = [];
+            this.pressedHexgagon.showPiece = true;
+            this.pressedHexgagon = null;
+        }
     }
 
     static isNumeric(str) {
