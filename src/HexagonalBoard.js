@@ -112,10 +112,10 @@ class HexagonalBoard {
             let h = this.getHexagon(this.legalMoves[i].x, this.legalMoves[i].y);
             if (h) {
                 if(this.legalMoves[i].capture) {
-                    strokeWeight(10);
+                    strokeWeight(this.hexagonRadius / 5);
                     circle(h.canvasX, h.canvasY, h.radius );
                 } else {
-                    strokeWeight(40);
+                    strokeWeight(this.hexagonRadius / 1.5);
                     point(h.canvasX, h.canvasY);
                 }
             }
@@ -163,6 +163,8 @@ class HexagonalBoard {
             for (let item in this.hexagons) {
                 for (let subitem in this.hexagons[item]) {
                     let h = this.hexagons[item][subitem];
+
+                    // if(h == this.pressedHexgagon) return;
                     
                     if(HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
                         for(let move in this.legalMoves) {
@@ -172,7 +174,6 @@ class HexagonalBoard {
                                 h.setPiece(this.pressedHexgagon.getPiece());
                                 this.pressedHexgagon.unsetPiece();
 
-                                console.log("correct");
                                 break;
                             }
                         }
