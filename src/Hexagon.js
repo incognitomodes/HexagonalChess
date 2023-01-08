@@ -6,6 +6,8 @@ class Hexagon {
         this.boardCenterX = boardCenterX;
         this.boardCenterY = boardCenterY;
 
+        this.showPiece = true;
+
         this.canvasX = boardCenterX + posX * radius * 1.5;
         this.canvasY = boardCenterY + posY * 1.73 * radius + (posX % 2 == 0 ? 0 : (radius * 1.73) / 2);
 
@@ -62,7 +64,7 @@ class Hexagon {
         this.color.setFill();
         Hexagon.drawHexagon(this.canvasX, this.canvasY, this.radius);
 
-        if (this.piece) {
+        if (this.piece && this.showPiece) {
             this.piece.show(this.canvasX, this.canvasY, this.radius);
         }
 

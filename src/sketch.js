@@ -25,11 +25,13 @@ function setup() {
     // board.loadPosition("qbk/rn1b1nr/1pp2b2pp1/3pp1pp3/5p5/11/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
 
 
-    board.loadPosition("qbk/rn1b11r/1pp2b21p1/3pp1pp3/5p5/11/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
+    board.loadPosition("qbk/rn1b11r/1112b2111/3111113/515/bbb8/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
     // board.loadPosition("3/7/111212111/3111113/515/11/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
     // board.legalMoves = LegalMoves.getMovesForRook(0,0);
 
 }
+
+let holding = false;
 
 function draw() {
     background(55);
@@ -43,6 +45,12 @@ function draw() {
     board.show();
 
     // noLoop();
+
+    if(holding) {
+        stroke(0, 255 ,0);
+        strokeWeight(10);
+        point(mouseX, mouseY);
+    }
 
     if (DEBUG) {
         stroke(0, 40);
@@ -60,13 +68,18 @@ function draw() {
     }
 }
 
-function mouseClicked() {
+function mousePressed() {
+    holding = true;
+
     if (mouseX < 50 && mouseY < 20) {
         DEBUG = !DEBUG;
     }
     // console.log(mouseX + "==" + mouseY);
-    board.mouseClicked(mouseX, mouseY);
+    board.mousePressed(mouseX, mouseY);
 }
 
 function mouseReleased() {
+    holding = false;
+
+    board.mouseReleased(mouseX, mouseY);
 }

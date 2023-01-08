@@ -20,19 +20,19 @@ class Piece {
 
     getMovesForThisPiece(x, y, board) {
         if (this.type == "r") {
-            return LegalMoves.getMovesForRook(x, y, board);
+            return LegalMoves.getMovesForRook(x, y, board, this.color);
         }
         if (this.type == "b") {
-            return LegalMoves.getMovesForBishop(x, y, board);
+            return LegalMoves.getMovesForBishop(x, y, board, this.color);
         }
         if (this.type == "q") {
-            return LegalMoves.getMovesForQueen(x, y, board);
+            return LegalMoves.getMovesForQueen(x, y, board, this.color);
         }
         if (this.type == "n") {
-            return LegalMoves.getMovesForKnight(x, y, board);
+            return LegalMoves.getMovesForKnight(x, y, board, this.color);
         }
         if (this.type == "k") {
-            return LegalMoves.getMovesForKing(x, y, board);
+            return LegalMoves.getMovesForKing(x, y, board, this.color);
         }
 
         return [];

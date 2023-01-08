@@ -102,12 +102,18 @@ class HexagonalBoard {
 
     showLegalMoves() {
         stroke(255, 0, 0, 100);
-        strokeWeight(40);
+        noFill();
 
         for (let i = 0; i < this.legalMoves.length; i++) {
             let h = this.getHexagon(this.legalMoves[i].x, this.legalMoves[i].y);
             if (h) {
-                point(h.canvasX, h.canvasY);
+                if(this.legalMoves[i].capture) {
+                    strokeWeight(10);
+                    circle(h.canvasX, h.canvasY, h.radius );
+                } else {
+                    strokeWeight(40);
+                    point(h.canvasX, h.canvasY);
+                }
             }
         }
     }
@@ -126,7 +132,7 @@ class HexagonalBoard {
         return false;
     }
 
-    mouseClicked(mouseX, mouseY) {
+    mousePressed(mouseX, mouseY) {
         this.legalMoves = [];
         for (let item in this.hexagons) {
             for (let subitem in this.hexagons[item]) {
@@ -135,12 +141,17 @@ class HexagonalBoard {
                 if(HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
                     console.log("piece clicked");
                     this.legalMoves = h.getPiece().getMovesForThisPiece(h.posX, h.posY, this);
+
+                    this.pressedHexgagon = h;
+                    h.showPiece = false;
                 }
             }
         }
     }
 
     mouseReleased(mouseX, mouseY) {
+        this.pressedHexgagon.showPiece = true;
+        this.pressedHexgagon = null;
     }
 
     static isNumeric(str) {
