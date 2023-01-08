@@ -1,7 +1,7 @@
 let board;
 let rookMoves;
 
-let DEBUG = true;
+let DEBUG = false;
 
 function preload() {
 }
