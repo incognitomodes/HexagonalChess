@@ -53,6 +53,10 @@ class Hexagon {
         return this.piece;
     }
 
+    pieceEmpty() {
+        return this.getPiece().isNone();
+    }
+
     show() {
         this.color.setStroke();
         this.color.setFill();
@@ -62,9 +66,11 @@ class Hexagon {
             this.piece.show(this.canvasX, this.canvasY, this.radius);
         }
 
-        fill(255, 0, 0);
-        strokeWeight(1);
-        text(this.posX + "," + this.posY, this.canvasX, this.canvasY);
+        if (DEBUG) {
+            fill(255, 0, 0);
+            strokeWeight(1);
+            text(this.posX + "," + this.posY, this.canvasX, this.canvasY);
+        }
     }
 
     static drawHexagon(centerX, centerY, radius) {

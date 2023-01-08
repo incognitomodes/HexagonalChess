@@ -5,6 +5,7 @@ class HexagonalBoard {
 
         // array of hexagons (squares in normal chess)
         this.hexagons = new Object();
+        this.legalMoves = [];
 
         // get max values for hexagon radiuses
         // rH = height / 11 * sqrt(3)
@@ -95,11 +96,60 @@ class HexagonalBoard {
                 this.hexagons[item][subitem].show();
             }
         }
+
+        this.showLegalMoves();
+    }
+
+    showLegalMoves() {
+        stroke(255, 0, 0, 100);
+        strokeWeight(40);
+
+        for (let i = 0; i < this.legalMoves.length; i++) {
+            let h = this.getHexagon(this.legalMoves[i].x, this.legalMoves[i].y);
+            if (h) {
+                point(h.canvasX, h.canvasY);
+            }
+        }
+    }
+
+    inBoard(x, y) {
+        if (this.hexagons[x]) {
+            return this.hexagons[x][y] ?? false;
+        }
+        return false;
+    }
+
+    inBoardAndEmpty(x, y) {
+        if(this.inBoard(x, y)) {
+            return this.getHexagon(x, y).pieceEmpty();
+        }
+        return false;
+    }
+
+    mouseClicked(mouseX, mouseY) {
+        this.legalMoves = [];
+        for (let item in this.hexagons) {
+            for (let subitem in this.hexagons[item]) {
+                let h = this.hexagons[item][subitem];
+                
+                if(HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
+                    console.log("piece clicked");
+                    this.legalMoves = h.getPiece().getMovesForThisPiece(h.posX, h.posY, this);
+                }
+            }
+        }
+    }
+
+    mouseReleased(mouseX, mouseY) {
     }
 
     static isNumeric(str) {
         if (typeof str != "string") return false // we only process strings!  
         return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
             !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+    }
+
+    static distSq(x1, y1, x2, y2) {
+        return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
     }
 }
