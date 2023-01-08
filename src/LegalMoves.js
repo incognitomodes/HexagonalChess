@@ -605,6 +605,117 @@ class LegalMoves {
             }
         }
 
+        // bishop
+        tmpX = x; tmpY = y;
+        for (let i = 0; i < 1; i++) {
+            tmpX -= 2;
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
+            } else {
+                break;
+            }
+        }
+
+        tmpX = x; tmpY = y;
+        for (let i = 0; i < 1; i++) {
+            tmpX += 2;
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
+            } else {
+                break;
+            }
+        }
+
+        tmpX = x; tmpY = y;
+        for (let i = 0; i < 1; i++) {
+            tmpX--;
+            if (Math.abs(tmpX) % 2 == 1) {
+                tmpY--;
+            }
+            tmpY--;
+
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
+            } else {
+                break;
+            }
+        }
+
+        tmpX = x; tmpY = y;
+        for (let i = 0; i < 1; i++) {
+            tmpX++;
+            if (Math.abs(tmpX) % 2 == 0) {
+                tmpY++;
+            }
+            tmpY++;
+
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
+            } else {
+                break;
+            }
+        }
+
+        tmpX = x; tmpY = y;
+        for (let i = 0; i < 1; i++) {
+            tmpX++;
+            if (Math.abs(tmpX) % 2 == 1) {
+                tmpY--;
+            }
+            tmpY--;
+
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
+            } else {
+                break;
+            }
+        }
+
+        tmpX = x; tmpY = y;
+        for (let i = 0; i < 1; i++) {
+            tmpX--;
+            if (Math.abs(tmpX) % 2 == 0) {
+                tmpY++;
+            }
+            tmpY++;
+
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
+            } else {
+                break;
+            }
+        }
+
         return moves;
     }
 
