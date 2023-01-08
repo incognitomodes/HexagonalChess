@@ -60,12 +60,18 @@ class HexagonalBoard {
 
                     if (HexagonalBoard.isNumeric(piece)) {
                         column += Number(piece) - 1;
-                    } else if (piece != ""){
+                    } else if (piece != "") {
                         // ckeck if white or black piece
                         if (piece == piece.toUpperCase()) {
                             tmp = new Piece(piece.toLowerCase(), "w", this.textures[piece.toLowerCase() + "w"]);
+                            if (piece.toLowerCase() == "p") {
+                                this.hexagons[column][row].whitePawnStartingHex = true;
+                            }
                         } else {
                             tmp = new Piece(piece.toLowerCase(), "b", this.textures[piece.toLowerCase() + "b"]);
+                            if (piece.toLowerCase() == "p") {
+                                this.hexagons[column][row].blackPawnStartingHex = true;
+                            }
                         }
 
                         this.hexagons[column][row].setPiece(tmp);
@@ -98,7 +104,7 @@ class HexagonalBoard {
 
         this.showLegalMoves();
 
-        if(this.pressedHexgagon) {
+        if (this.pressedHexgagon) {
             image(this.pressedHexgagon.getPiece().image, mouseX, mouseY, this.hexagonRadius * 1.5, this.hexagonRadius * 1.5);
         }
     }
@@ -110,9 +116,9 @@ class HexagonalBoard {
         for (let i = 0; i < this.legalMoves.length; i++) {
             let h = this.getHexagon(this.legalMoves[i].x, this.legalMoves[i].y);
             if (h) {
-                if(this.legalMoves[i].capture) {
+                if (this.legalMoves[i].capture) {
                     strokeWeight(this.hexagonRadius / 5);
-                    circle(h.canvasX, h.canvasY, h.radius );
+                    circle(h.canvasX, h.canvasY, h.radius);
                 } else {
                     strokeWeight(this.hexagonRadius / 1.5);
                     point(h.canvasX, h.canvasY);
@@ -129,7 +135,7 @@ class HexagonalBoard {
     }
 
     inBoardAndEmpty(x, y) {
-        if(this.inBoard(x, y)) {
+        if (this.inBoard(x, y)) {
             return this.getHexagon(x, y).pieceEmpty();
         }
         return false;
@@ -140,9 +146,9 @@ class HexagonalBoard {
         for (let item in this.hexagons) {
             for (let subitem in this.hexagons[item]) {
                 let h = this.hexagons[item][subitem];
-                
-                if(HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
-                    if(h.pieceEmpty()) {
+
+                if (HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
+                    if (h.pieceEmpty()) {
                         return;
                     }
 
@@ -158,18 +164,18 @@ class HexagonalBoard {
     }
 
     mouseReleased(mouseX, mouseY) {
-        if(this.pressedHexgagon) {
+        if (this.pressedHexgagon) {
             for (let item in this.hexagons) {
                 for (let subitem in this.hexagons[item]) {
                     let h = this.hexagons[item][subitem];
 
                     // if(h == this.pressedHexgagon) return;
-                    
-                    if(HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
-                        for(let move in this.legalMoves) {
+
+                    if (HexagonalBoard.distSq(mouseX, mouseY, h.canvasX, h.canvasY) < h.radius * h.radius) {
+                        for (let move in this.legalMoves) {
                             // check if move can be made
-                            if(this.legalMoves[move].x == h.posX && this.legalMoves[move].y == h.posY) {
-                                
+                            if (this.legalMoves[move].x == h.posX && this.legalMoves[move].y == h.posY) {
+
                                 h.setPiece(this.pressedHexgagon.getPiece());
                                 this.pressedHexgagon.unsetPiece();
 

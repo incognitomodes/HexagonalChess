@@ -23,6 +23,45 @@ class LegalMoves {
         return false;
     }
 
+    static createMoveNoCapture(board, moveX, moveY, movingPieceColor) {
+        if (board.inBoard(moveX, moveY)) {
+            let h = board.getHexagon(moveX, moveY);
+
+            if (h.getPiece().color == movingPieceColor) {
+                return false;
+            }
+
+            if (h.getPiece().isNone()) {
+                return {
+                    x: moveX,
+                    y: moveY,
+                }
+            }
+        }
+        return false;
+    }
+
+    static createMoveOnlyCapture(board, moveX, moveY, movingPieceColor) {
+        if (board.inBoard(moveX, moveY)) {
+            let h = board.getHexagon(moveX, moveY);
+
+            if (h.getPiece().color == movingPieceColor) {
+                return false;
+            }
+
+            if (h.getPiece().isNone()) {
+                return false
+            }
+
+            return {
+                x: moveX,
+                y: moveY,
+                capture: true,
+            }
+        }
+        return false;
+    }
+
     static getMovesForRook(x, y, board, color) {
         let moves = [];
 
@@ -632,6 +671,48 @@ class LegalMoves {
         }
 
         return m;
+    }
+
+    static getMovesForPawn(x, y, board, color) {
+        let moves = [];
+        let direction = color == "w" ? -1 : 1;
+
+        let move = LegalMoves.createMoveNoCapture(board, x, y + direction, color);
+        if (move) {
+            moves.push(move);
+        }
+
+        if (color == "w" && board.getHexagon(x, y).whitePawnStartingHex ||
+            color == "b" && board.getHexagon(x, y).blackPawnStartingHex) {
+            move = LegalMoves.createMoveNoCapture(board, x, y + direction * 2, color);
+            if (move && moves.length > 0) {
+                moves.push(move);
+            }
+        }
+
+        if (Math.abs(x) % 2 == 0 && color == "w"
+            || Math.abs(x) % 2 == 1 && color == "b") {
+            for (let i = -1; i <= 1; i += 2) {
+                let tmpX = x + i, tmpY = y + direction;
+
+                let move = LegalMoves.createMoveOnlyCapture(board, tmpX, tmpY, color);
+                if (move) {
+                    moves.push(move);
+                }
+            }
+        } else if (Math.abs(x) % 2 == 1 && color == "w"
+            || Math.abs(x) % 2 == 0 && color == "b") {
+            for (let i = -1; i <= 1; i += 2) {
+                let tmpX = x + i, tmpY = y;
+
+                let move = LegalMoves.createMoveOnlyCapture(board, tmpX, tmpY, color);
+                if (move) {
+                    moves.push(move);
+                }
+            }
+        }
+
+        return moves;
     }
 
     static inBoard(x, y) {

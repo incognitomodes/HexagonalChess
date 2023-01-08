@@ -34,6 +34,9 @@ class Piece {
         if (this.type == "k") {
             return LegalMoves.getMovesForKing(x, y, board, this.color);
         }
+        if (this.type == "p") {
+            return LegalMoves.getMovesForPawn(x, y, board, this.color);
+        }
 
         return [];
     }
