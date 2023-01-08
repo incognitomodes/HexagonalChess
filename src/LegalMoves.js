@@ -467,22 +467,26 @@ class LegalMoves {
         let moves = [];
 
         for (let i = 1; i <= 1; i++) {
-            if (board.inBoardAndEmpty(x, y + i)) {
-                moves.push({
-                    x: x,
-                    y: y + i,
-                });
+            let move = LegalMoves.createMove(board, x, y + i, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
             } else {
                 break;
             }
         }
 
         for (let i = -1; i >= -1; i--) {
-            if (board.inBoardAndEmpty(x, y + i)) {
-                moves.push({
-                    x: x,
-                    y: y + i,
-                });
+            let move = LegalMoves.createMove(board, x, y + i, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
             } else {
                 break;
             }
@@ -494,11 +498,13 @@ class LegalMoves {
                 tmpY--;
             }
             tmpX++;
-            if (board.inBoardAndEmpty(tmpX, tmpY)) {
-                moves.push({
-                    x: tmpX,
-                    y: tmpY,
-                });
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
             } else {
                 break;
             }
@@ -511,11 +517,13 @@ class LegalMoves {
             }
             tmpX--;
 
-            if (board.inBoardAndEmpty(tmpX, tmpY)) {
-                moves.push({
-                    x: tmpX,
-                    y: tmpY,
-                });
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
             } else {
                 break;
             }
@@ -527,11 +535,13 @@ class LegalMoves {
                 tmpY++;
             }
             tmpX++;
-            if (board.inBoardAndEmpty(tmpX, tmpY)) {
-                moves.push({
-                    x: tmpX,
-                    y: tmpY,
-                });
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
             } else {
                 break;
             }
@@ -544,11 +554,13 @@ class LegalMoves {
             }
             tmpX--;
 
-            if (board.inBoardAndEmpty(tmpX, tmpY)) {
-                moves.push({
-                    x: tmpX,
-                    y: tmpY,
-                });
+            let move = LegalMoves.createMove(board, tmpX, tmpY, color);
+            if (move) {
+                if (move.capture) {
+                    moves.push(move);
+                    break;
+                }
+                moves.push(move);
             } else {
                 break;
             }
@@ -610,9 +622,16 @@ class LegalMoves {
             }
         }
 
-        moves = moves.filter(m => board.inBoardAndEmpty(m.x, m.y));
+        let m = [];
 
-        return moves;
+        for (let i = 0; i < moves.length; i++) {
+            let move = LegalMoves.createMove(board, moves[i].x, moves[i].y, color);
+            if (move) {
+                m.push(move);
+            }
+        }
+
+        return m;
     }
 
     static inBoard(x, y) {

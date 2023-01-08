@@ -25,7 +25,7 @@ function setup() {
     // board.loadPosition("qbk/rn1b1nr/1pp2b2pp1/3pp1pp3/5p5/11/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
 
 
-    board.loadPosition("qbk/rn1b11r/1112b2111/3111113/515/bbb8/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
+    board.loadPosition("qbk/rn1b11r/1112b2111/3111113/515/bbn8/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
     // board.loadPosition("3/7/111212111/3111113/515/11/4PPP4/2PP3PP2/PR2B2RP/NQBKN/B");
     // board.legalMoves = LegalMoves.getMovesForRook(0,0);
 
